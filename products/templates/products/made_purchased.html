@@ -1,0 +1,33 @@
+{%extends 'products/base.html'%}
+{%load static%}
+
+{%block css%}
+    <link href="{% static 'vendor\css\made_purchased.css' %}" rel="stylesheet">
+{%endblock%}
+
+
+<main>
+    <h1>Список приобретенных товаров</h1>
+{%block content%}
+    <table>
+        {% for purchase in purchases %}
+        <thead>
+            <tr>
+                <th>Товар: {{purchase.product.name}}</th>
+                <th>Цена за единицу: {{purchase.product.price}}</th>
+                <th>Приобретенное колличество: {{purchase.count}}</th>       
+                <th><form action="{% url 'products:returned' purchase.id %}", method="post">
+                    {% csrf_token %}
+                    <label for="username">Товар: </label>
+                    {{form.as_p }}
+                    <button type="submit">подтвердить возврат</button>
+                
+                </form></th>  
+                
+            </tr>
+        </thead>
+        {% endfor %}
+
+    </table>
+</main>
+{%endblock%}

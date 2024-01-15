@@ -1,0 +1,23 @@
+{%extends 'products/base.html'%} {%load static%} {%block css%}
+<link href="{% static 'vendor\css\returned_list.css' %}" rel="stylesheet" />
+{%endblock%} {%block content%}
+<table>
+  {%for return in purchases%}
+  <thead>
+    <tr>
+      <th>Товар:{{return.purchase.product.name}}</th>
+      <th>Приобретенное колличество: {{return.purchase.count}}</th>
+      <th>Пользователь:{{return.purchase.user.username}}</th>
+      <th> <form action="{%url 'products:submit' return.id %}" method="post">
+        {% csrf_token %}
+         <button type="submit">Подтвердить</button>
+    </form></th>
+      <th> <form action="{%url 'products:reject' return.id %}" method="post">
+        {% csrf_token %}
+         <button type="submit">Отклонить</button>
+    </form></th>
+    </tr>
+  </thead>
+  {%endfor%}
+</table>
+{%endblock%}

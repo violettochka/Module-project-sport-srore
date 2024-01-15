@@ -1,0 +1,51 @@
+{%extends 'products/base.html'%}
+{%load static%}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    {%block css%}
+    <link href="{% static 'vendor\css\change_product.css' %}" rel="stylesheet">
+    {%endblock%}
+
+{%block content%}
+<main>
+    <h1>Редактирование продукта</h1>
+
+
+    <form action="{%url 'products:change_product' product.id%}" method="post", enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label for="productName">Название товара:</label>
+        {{form.name}}
+
+        <label for="productName">Описание товара:</label>
+        {{form.description}}
+
+        <label for="productQuantity">Количество в наличии:</label>
+        {{form.quantity}}
+
+        <label for="productPrice">Цена товара:</label>
+        {{form.price}}
+
+        <div class="custom-file">
+            {{form.image}}
+            <label class="custom-file-label" >Выберите изображение</label>
+        </div>
+
+        <button type="submit">Применить изменения</button>
+    </form>
+    
+{% if form.errors %}
+<div>
+    Ошибки в форме:
+    <ul>
+        {% for error in form.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+</main>
+{%endblock%}

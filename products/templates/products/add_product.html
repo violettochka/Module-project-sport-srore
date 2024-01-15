@@ -1,0 +1,32 @@
+{%extends 'products/base.html'%}
+{%load static%}
+
+
+{%block css%}
+<link href="{% static 'vendor\css\add_product.css' %}" rel="stylesheet">
+{%endblock%}
+
+{%block content%}
+<main>
+    <h1>Добавление продукта</h1>
+    <form action="{%url 'products:add_product'%}", method="post",  enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="productName">Название товара:</label>
+        {{form.name}}
+
+        <label for="productImage">Изображение товара (URL):</label>
+        {{form.image}}
+
+        <label for="productImage">Описание товара</label>
+        {{form.description}}
+
+        <label for="productQuantity">Количество в наличии:</label>
+        {{form.quantity}}
+
+        <label for="productPrice">Цена товара:</label>
+        {{form.price}}
+
+        <button type="submit">Добавить продукт</button>
+    </form>
+</main>
+{%endblock%}

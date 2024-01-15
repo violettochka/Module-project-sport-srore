@@ -1,0 +1,42 @@
+{%extends 'products/base.html'%}
+{%load static%}
+
+    {%block css%}
+    <link href="{% static 'vendor\css\catalog.css' %}" rel="stylesheet">
+    {%endblock%}
+
+
+{%block content%}
+<main>
+    <h1>Каталог товаров</h1>
+    {%for product in products%}
+    <div class="product">
+            {%if product.image %}
+            <img class="card-img-top"
+                 src="{{product.image.url}}"
+                 alt="">
+            {%endif%}
+        <div class="product-title">{{product.name}}</div>
+        <div class="product-quantity">В наличии: {{product.quantity}}</div>
+        <div class="product-price">Цена: {{product.price}} грн</div>
+        {%if user.is_superuser%}
+        <a href="{% url 'products:change_product' product.id %}" class="edit-link">Изменить товар</a>
+        {%endif%}
+        {%if not user.is_superuser and user.is_authenticated %}
+        <form action="{%url 'products:purchased' product.id %}" , method="post">
+            {% csrf_token %}
+            <label for="username">колличество товаров</label>
+            {{ form.as_p }}
+        
+            <button type="submit">подтвердить покупку</button>
+        
+        </form>
+        
+        {%endif%}
+    </div>
+    {%endfor%}
+
+    <!-- Добавьте другие товары по аналогии -->
+
+</main>
+{%endblock%}

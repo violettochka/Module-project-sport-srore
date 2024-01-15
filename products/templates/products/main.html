@@ -1,0 +1,25 @@
+{%extends 'products/base.html'%}
+{%load static%}
+
+{%block css%}
+    <link href="{% static 'vendor\css\main.css' %}" rel="stylesheet">
+{%endblock%}
+
+{%block content%}
+<main>
+    <h1>Abibas</h1>
+    <h2>Мы рады приветствовать вас в нашем магазине одежды!</h2>
+    <button id="start-purchase-btn" type="button" class="btn btn-lg">
+        <a id="start-purchase-link" href="{% url 'products:catalog' %}">
+            Каталог с товарами
+        </a>
+    </button>
+    {% if messages %}
+    <ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+</main>
+{%endblock%}
